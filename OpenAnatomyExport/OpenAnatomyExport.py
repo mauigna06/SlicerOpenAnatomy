@@ -407,8 +407,10 @@ class OpenAnatomyExportLogic(ScriptedLoadableModuleLogic):
       self._decimationParameterNode.SetParameterAsFloat("reductionFactor", self.reductionFactor)
       self._temporaryExportNodes.append(self._decimationParameterNode)
 
-    # Quadric decimation
-    if self.reductionFactor == 0.0:
+    # Quadric decimation only if model number of points is greater than 50
+    if (
+      (self.reductionFactor == 0.0) or (inputModelNode.GetPolyData().GetNumberOfPoints() < 50)
+      ):
       outputModelNode.CopyContent(inputModelNode)
     else:
       
